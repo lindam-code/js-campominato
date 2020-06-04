@@ -9,20 +9,23 @@
 // BONUS: all’inizio il software richiede anche una difficoltà all’utente che cambia il range di numeri casuali.
 // Con difficoltà 0=> tra 1 e 100, con difficoltà 1 => tra 1 e 80, con difficoltà 2=> tra 1 e 50
 
-// Il computer deve generare 16 numeri casuali tra 1 e 100
-// rappresentanti un array di bombe
-// usa una funzione per creare l'array di numeri casuali non ripetuti
-var numeroBombe = 16; // TODO: da mettere uguale a 16
-var rangeMaxNumeriRandom = 20; // TODO: da mettere uguale a 100
+
+// Chieder all'utente il livello del giocatore
+var livelloUtente = parseInt(prompt("Dimmi a che livello vuoi giocare: da 0 a 2!"));
+
+// Variabili che rappresentano le opzioni del gioco in base al livello scelto dall'numeroUtente
+var numeroBombe = 16;
+var rangeMaxNumeriRandom = calcolaRangeMaxNumeriRandom(livelloUtente);
+var numeroTentativiMassimo = rangeMaxNumeriRandom - numeroBombe;
+
+// Crea array di numeri rappresentanti le bombe
 var arrayBombe = creaArrayBombe(numeroBombe, rangeMaxNumeriRandom);
 console.log(arrayBombe);
 
 // Chiedere all'utente di inserire un numero alla volta
 // Se il numero è presente nella lista delle arrayBombe
 // Il gioco termina e l'utente ha perso
-// Continua a chiedere il numero per il numero di Tentativi
-var numeroTentativiMassimo = rangeMaxNumeriRandom - numeroBombe;
-
+// Continua a chiedere il numero per il numero di massimo di tentativi in base al livello
 var bombaBeccata = false;
 var tentativiUtente = 0;
 
@@ -75,4 +78,23 @@ function controllaLista(lista, numeroDaControllare) {
     }
   }
   return numeroPresente;
+}
+
+// Funzione che mi calcola il range massimo per il livello scelto
+// Argomento un numero da 0 a 2 che rappresenta il livello scelto dall'utente
+// Restituisce un numero che rappresenta il numero massimo per il range dei numeri casuali
+// in base alle regole del gioco
+function calcolaRangeMaxNumeriRandom(livello) {
+  var numeroMax;
+  switch (livello) {
+    case 0:
+      numeroMax = 100;
+      break;
+    case 1:
+    numeroMax = 80;
+    break;
+    default:
+      numeroMax = 50;
+  }
+  return numeroMax;
 }
