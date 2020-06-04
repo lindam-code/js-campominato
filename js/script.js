@@ -27,9 +27,9 @@ console.log(arrayBombe);
 // Il gioco termina e l'utente ha perso
 // Continua a chiedere il numero per il numero di massimo di tentativi in base al livello
 var bombaBeccata = false;
-var tentativiUtente = 0;
+var arrayNumeriUtente = [];
 
-while (!bombaBeccata && tentativiUtente < numeroTentativiMassimo) {
+while (!bombaBeccata && arrayNumeriUtente.length < numeroTentativiMassimo) {
   var numeroUtente = parseInt(prompt('Dimmi un numero da 1 a ' + rangeMaxNumeriRandom));
 
   // Il ciclo si blocca quando l'utente becca una bomba
@@ -39,15 +39,19 @@ while (!bombaBeccata && tentativiUtente < numeroTentativiMassimo) {
   if (numeroPresente) {
     bombaBeccata = true;
   } else {
-    tentativiUtente++;
+    var numeroGiaUsato = controllaLista(arrayNumeriUtente, numeroUtente);
+    if (!numeroGiaUsato) {
+      arrayNumeriUtente.push(numeroUtente);
+    }
   }
 }
 // Stampa il risultato del gioco con in numero di tentativi indovinati
 if (!bombaBeccata) {
   console.log('Hai vinto!! Il tuo punteggio è ' + tentativiUtente);
 } else {
-  console.log('Hai perso. Il tuo punteggio è '+ tentativiUtente);
+  console.log('Hai perso. Il tuo punteggio è '+ arrayNumeriUtente.length);
 }
+console.log(arrayNumeriUtente);
 
 // FUNZIONI
 
