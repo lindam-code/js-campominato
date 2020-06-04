@@ -10,25 +10,32 @@
 // Con difficoltà 0=> tra 1 e 100, con difficoltà 1 => tra 1 e 80, con difficoltà 2=> tra 1 e 50
 
 
-// Chieder all'utente il livello del giocatore
+// Chiedere all'utente a che livello vuole giocare
 var livelloUtente = parseInt(prompt("Dimmi a che livello vuoi giocare: da 0 a 2!"));
 
-// Variabili che rappresentano le opzioni del gioco in base al livello scelto dall'numeroUtente
+// Variabili che rappresentano le opzioni del gioco in base al livello scelto dall'utente
+// Numero bombe 16 per la consegna
+// Numero massimo range dei numeri random calcolato con la funzione, in base al livello scelto dall'utente
 var numeroBombe = 16;
 var rangeMaxNumeriRandom = calcolaRangeMaxNumeriRandom(livelloUtente);
 var numeroTentativiMassimo = rangeMaxNumeriRandom - numeroBombe;
 
 // Crea array di numeri rappresentanti le bombe
+// Usa una funzione che crea l'array in base al numero di bombe e al numero
+// di range dei numeri random
 var arrayBombe = creaArrayBombe(numeroBombe, rangeMaxNumeriRandom);
 console.log(arrayBombe);
 
-// Chiedere all'utente di inserire un numero alla volta
-// Se il numero è presente nella lista delle arrayBombe
-// Il gioco termina e l'utente ha perso
-// Continua a chiedere il numero per il numero di massimo di tentativi in base al livello
+// Chiedere all'utente di inserire un numero alla volta:
+// se il numero è presente nella lista delle Bombe il gioco termina e l'utente ha perso!!
+// L'utente deve continuare ad inserire numeri diversi tra loro fino ad numero di massimo di tentativi
+// in base al livello da lui scelto
 var bombaBeccata = false;
 var arrayNumeriUtente = [];
 
+
+// Usa funzioni per vedere se il numero inserito dall'utente è presente nella lista delle bombe
+// o se l'utente lo ha già inserito
 while (!bombaBeccata && arrayNumeriUtente.length < numeroTentativiMassimo) {
   var numeroUtente = parseInt(prompt('Dimmi un numero da 1 a ' + rangeMaxNumeriRandom));
 
@@ -39,24 +46,27 @@ while (!bombaBeccata && arrayNumeriUtente.length < numeroTentativiMassimo) {
   if (numeroPresente) {
     bombaBeccata = true;
   } else {
+    // Creo un array con i numeri inseriti dall'utente per controllare
+    // che non siano ripetuti
     var numeroGiaUsato = controllaLista(arrayNumeriUtente, numeroUtente);
     if (!numeroGiaUsato) {
       arrayNumeriUtente.push(numeroUtente);
     }
   }
 }
-// Stampa il risultato del gioco con in numero di tentativi indovinati
+// Stampa il risultato del gioco con il numero di tentativi indovinati
+// calcolato tramite un array dove vengono salvati tutti i numeri
+// inseriti dall'utente
 if (!bombaBeccata) {
   console.log('Hai vinto!! Il tuo punteggio è ' + tentativiUtente);
 } else {
   console.log('Hai perso. Il tuo punteggio è '+ arrayNumeriUtente.length);
 }
-console.log(arrayNumeriUtente);
 
 // FUNZIONI
 
 // Funzione che crea l'array di bombe
-// Argomenti: numero di bombe e range numeri random
+// Argomenti: numero di bombe e numero massimo del range dei numeri random
 // Restituisce un array di numeri casuali rappresentanti le bombe
 function creaArrayBombe(numeroBombe, rangeMaxNumeriRandom) {
   var arrayBombe = [];
@@ -85,7 +95,7 @@ function controllaLista(lista, numeroDaControllare) {
 }
 
 // Funzione che mi calcola il range massimo per il livello scelto
-// Argomento un numero da 0 a 2 che rappresenta il livello scelto dall'utente
+// Argomento: un numero da 0 a 2 che rappresenta il livello scelto dall'utente
 // Restituisce un numero che rappresenta il numero massimo per il range dei numeri casuali
 // in base alle regole del gioco
 function calcolaRangeMaxNumeriRandom(livello) {
