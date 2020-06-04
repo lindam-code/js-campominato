@@ -9,33 +9,42 @@
 // BONUS: all’inizio il software richiede anche una difficoltà all’utente che cambia il range di numeri casuali.
 // Con difficoltà 0=> tra 1 e 100, con difficoltà 1 => tra 1 e 80, con difficoltà 2=> tra 1 e 50
 
-// Chiedere all'utente numero da 1 a 100
-// var numeroUtente = parseInt(prompt('Dammi un numero da 1 a 100'));
-// console.log(numeroUtente);
-
-
 // Il computer deve generare 16 numeri casuali tra 1 e 100
 // rappresentanti un array di bombe
 // usa una funzione per creare l'array di numeri casuali non ripetuti
-var numeroBombe = 5; // TODO: da mettere uguale a 16
-var rangeMaxNumeriRandom = 5; // TODO: da mettere uguale a 100
+var numeroBombe = 16; // TODO: da mettere uguale a 16
+var rangeMaxNumeriRandom = 20; // TODO: da mettere uguale a 100
 var arrayBombe = creaArrayBombe(numeroBombe, rangeMaxNumeriRandom);
+console.log(arrayBombe);
 
+// Chiedere all'utente di inserire un numero alla volta
+// Se il numero è presente nella lista delle arrayBombe
+// Il gioco termina e l'utente ha perso
+// Continua a chiedere il numero per il numero di Tentativi
+var numeroTentativiMassimo = rangeMaxNumeriRandom - numeroBombe;
 
-// // Confronto numeroUtente con l'array dei numeri vietati
-// // Usa funzione che controlla se un numero è presente in una lista
-// var numeroPresente = controllaLista(arrayNumeriVietati,numeroUtente);
-// var listaNumeriValidi = [];
-//
-// var j = 0;
-// while (j < 84 && !numeroPresente) {
-//   listaNumeriValidi.push(numeroUtente);
-//   numeroUtente = parseInt(prompt('Vai avanti: dammi un altro numero da 1 a 100'));
-//   numeroPresente = controllaLista(arrayNumeriVietati,numeroUtente);
-//   console.log(numeroUtente);
-// }
-// // Comunicare il punteggio
-// console.log( 'Hai perso: hai azzeccato ' + listaNumeriValidi.length  + ' numeri validi!!');
+var bombaBeccata = false;
+var tentativiUtente = 0;
+
+while (!bombaBeccata && tentativiUtente < numeroTentativiMassimo) {
+  var numeroUtente = parseInt(prompt('Dimmi un numero da 1 a ' + rangeMaxNumeriRandom));
+
+  // Il ciclo si blocca quando l'utente becca una bomba
+  // cioè quando il numero dell'utente è presente nell'array delle bombe
+  // controllo usando la funzione che controlla se un numero è presente in una lista
+  var numeroPresente = controllaLista(arrayBombe, numeroUtente);
+  if (numeroPresente) {
+    bombaBeccata = true;
+  } else {
+    tentativiUtente++;
+  }
+}
+// Stampa il risultato del gioco con in numero di tentativi indovinati
+if (!bombaBeccata) {
+  console.log('Hai vinto!! Il tuo punteggio è ' + tentativiUtente);
+} else {
+  console.log('Hai perso. Il tuo punteggio è '+ tentativiUtente);
+}
 
 // FUNZIONI
 
@@ -54,7 +63,6 @@ function creaArrayBombe(numeroBombe, rangeMaxNumeriRandom) {
   }
   return arrayBombe;
 }
-
 
 // Funzione che controlla se un numero è presente in una lista di numeri
 // Argomenti: lista di numeri e numero da controllare
