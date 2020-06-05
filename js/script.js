@@ -20,8 +20,8 @@ var numeroBombe = 16;
 var rangeMaxNumeriRandom = calcolaRangeMaxNumeriRandom(livelloUtente);
 var numeroTentativiMassimo = rangeMaxNumeriRandom - numeroBombe;
 
-// Crea array di numeri rappresentanti le bombe
-// Usa una funzione che crea l'array in base al numero di bombe e al numero
+// Creare array di numeri rappresentanti le bombe
+// Usa una funzione che crea l'array in base al numero di bombe e al numero massimo
 // di range dei numeri random
 var arrayBombe = creaArrayBombe(numeroBombe, rangeMaxNumeriRandom);
 console.log(arrayBombe);
@@ -30,12 +30,14 @@ console.log(arrayBombe);
 // se il numero è presente nella lista delle Bombe il gioco termina e l'utente ha perso!!
 // L'utente deve continuare ad inserire numeri diversi tra loro fino ad numero di massimo di tentativi
 // in base al livello da lui scelto
+
+// Variabili di appoggio per controllare se l'utente può andare avanti
+// o incappa in una bomba e il gioco finisce
 var bombaBeccata = false;
 var arrayNumeriUtente = [];
 
-
-// Usa funzioni per vedere se il numero inserito dall'utente è presente nella lista delle bombe
-// o se l'utente lo ha già inserito
+// Ciclo per fare il gioco: usa funzioni per vedere se il numero inserito dall'utente è presente
+// nella lista delle bombe o se l'utente lo ha già inserito
 while (!bombaBeccata && arrayNumeriUtente.length < numeroTentativiMassimo) {
   var numeroUtente = parseInt(prompt('Dimmi un numero da 1 a ' + rangeMaxNumeriRandom));
 
